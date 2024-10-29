@@ -10,47 +10,54 @@ interface Props {
 export const Person: React.FC<Props> = ({ person }) => {
   const { personSlug } = useParams();
 
+  const {
+    name,
+    sex,
+    slug,
+    born,
+    died,
+    mother,
+    motherName,
+    father,
+    fatherName,
+  } = person;
+
   return (
     <tr
       data-cy="person"
-      className={cn({ 'has-background-warning': personSlug === person.slug })}
+      className={cn({ 'has-background-warning': personSlug === slug })}
     >
       <td>
         <NavLink
-          to={`/people/${person.slug}`}
-          className={cn({ 'has-text-danger': person.sex === 'f' })}
+          to={`/people/${slug}`}
+          className={cn({ 'has-text-danger': sex === 'f' })}
         >
-          {person.name}
+          {name}
         </NavLink>
       </td>
 
-      <td>{person.sex}</td>
-      <td>{person.born}</td>
-      <td>{person.died}</td>
+      <td>{sex}</td>
+      <td>{born}</td>
+      <td>{died}</td>
 
       {person.mother ? (
         <td>
-          <NavLink
-            to={`/people/${person.mother.slug}`}
-            className="has-text-danger"
-          >
-            {person.mother.name}
+          <NavLink to={`/people/${mother?.slug}`} className="has-text-danger">
+            {mother?.name}
           </NavLink>
         </td>
-      ) : person.motherName ? (
-        <td>{person.motherName}</td>
+      ) : motherName ? (
+        <td>{motherName}</td>
       ) : (
         <td>-</td>
       )}
 
       {person.father ? (
         <td>
-          <NavLink to={`/people/${person.father.slug}`}>
-            {person.father.name}
-          </NavLink>
+          <NavLink to={`/people/${father?.slug}`}>{father?.name}</NavLink>
         </td>
-      ) : person.fatherName ? (
-        <td>{person.fatherName}</td>
+      ) : fatherName ? (
+        <td>{fatherName}</td>
       ) : (
         <td>-</td>
       )}
